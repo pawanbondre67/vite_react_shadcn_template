@@ -1,11 +1,40 @@
-import { Button } from "@/components/ui/button"
 
-function App() {
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/login/login";
+import Signup from "./components/signUp/SignUp";
+import TableDemo from "./components/Table";
+import Layout from "./components/layout/Layout";
+import RequireAuth from "./components/RequireAuth";
+import PersistLogin from "./components/PersistLogin";
+import NotFound from "./components/NOT_FOUND";
+
+
+
+
+const App = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
-  )
-}
+  <Routes>
+  <Route path="/" element={<Layout /> }>
 
-export default App
+{/* public routes */}
+<Route path="login" element={<Login />} /> 
+<Route path="signup" element={<Signup />} />
+
+
+{/* ProtectedRoute */}
+<Route element={<PersistLogin />}  >
+<Route element={<RequireAuth/>}  >
+<Route path="/" element={<TableDemo /> } />
+</Route>
+</Route>
+
+{/* missing routes */}
+
+<Route path="*" element={<NotFound />}  />
+  </Route>
+  </Routes>
+       
+  );
+};
+
+export default App;
